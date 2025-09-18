@@ -13,7 +13,18 @@
 .fotografias img {
     width: 150px;
     border-radius: 20px;
-}</style>
+}
+
+div p:nth-child(2) {
+  background-color: rgb(0, 255, 30);
+}
+
+div p:nth-child(4) {
+  background-color: rgb(0, 229, 255);
+}
+
+
+</style>
 </head>
 <body>
     <header>
@@ -26,9 +37,14 @@
     </header>
     <main>
 <h2>Multimédia</h2>
+<p>
+    <a href="#fotografias">Fotografias</a>
+    <a href="#video">Vídeo</a>
+    <a href="#poema">Poema</a>
+</p>
 <p>Nesta página encontra conteúdos multimédia</p>
 <section>
-    <h3>Fotografias</h3>
+    <h3 id="fotografias">Fotografias</h3>
     <div class="fotografias">
     <img src="/images/img2.avif" alt="barcelona2">
     <img src="/images/img3.jpg" alt="barcelona3">
@@ -41,11 +57,11 @@
     </div>
 </section>
 <section>
-    <h3>Vídeo</h3>
+    <h3 id="video">Vídeo</h3>
     <iframe src="https://www.youtube.com/watch?v=5y5uPLNIMzA&pp=ygUOYmFyY2Vsb25hIGNpdHnSBwkJygkBhyohjO8%3D"></iframe>
 </section>
 <section>
-    <h3>Poesia</h3>
+    <h3 id="poema">Poesia</h3>
     <div>
     <p>No Mediterrâneo teu sopro é sal,</p>
 <p>ruas em quadras, mar e coral.</p>
