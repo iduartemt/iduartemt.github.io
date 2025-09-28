@@ -1,8 +1,96 @@
+*{
+    margin: 0;
+}
 body {
     background-color: #b3b3b3;
 }
 
-img {
-    width: 300px ;
+header{
+    text-align: center;
+}
 
+section {
+    height:100vh;
+}
+
+#heroimage {
+   position: relative;
+  background:#000; 
+}
+
+  #heroimage img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;                /* atrás */
+}
+#heroimage nav{
+  position:relative;
+  z-index:1;                /* na frente da imagem */
+  padding-left:20px;
+}
+
+img{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+nav ul{
+    list-style: none;
+    padding: 0;
+    margin: 20px;
+    display: flex;
+    gap: 100px;
+
+}
+
+nav a {
+    text-decoration: none;
+    color:#b3b3b3;
+    background-color: #3e3b3b;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+}
+
+section #hero {
+    color: white;
+    overflow: visible;
+    width: 100%;
+    margin-top: 300px;
+    margin-left: 50px;
+    font-size: 100px;
+}
+
+#projetos {
+    background-color: rgb(224, 212, 126);
+}
+
+#projetos h1 {
+padding-top: 20px;
+padding-left: 10px;
+}
+
+#projetos p {
+    font-size:20px;
+    padding-top: 10px;
+}
+
+.boxes {
+    display: flex;
+    justify-content:center;
+    flex-wrap:wrap;
+gap: 40px;
+
+}
+.boxes div {
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 30px;
+    width: 250px;
+    background-color: #bebb61;
+    font-style:oblique;
 }
