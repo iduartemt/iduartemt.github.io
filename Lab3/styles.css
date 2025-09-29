@@ -1,19 +1,36 @@
 * {
   margin: 0;
-  background-color: bisque;
+  font-family: arial;
+  background-color: antiquewhite;
 }
 
+
 nav {
-   padding-top: 5px;
-  padding-bottom: 5px;
-background-color: rgb(67, 67, 77);
-text-align: center;
+   padding: 20px;
+  text-align: center;
+  display: flex;
+  gap: 10px;
 }
 
 nav a {
-  background-color: rgb(67, 67, 77);
-  color: aliceblue;
+ padding: 10px 20px;
+  background-color: rgb(190, 203, 142);
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+  box-shadow: 2px 3px 3px lightgrey;
+
 }
+
+nav a:last-child {
+  background: rgb(104, 123, 83);
+  color: white;
+}
+
+a:hover {
+  filter: brightness(90%);
+}
+
 body main p {
   border-radius: 10px;
   margin: 10px 10px;
@@ -65,4 +82,19 @@ footer p{
   color: aliceblue;
   text-align: center;
 background-color: rgb(67, 67, 77);
+}
+
+@media(max-wifth: 600px){
+header, nav {
+  flex-direction: column;
+}
+nav {
+    display: none;
+  }
+  header:hover nav {
+    display: flex;
+  }
+  .hamburguer {
+    display: block;
+  }
 }

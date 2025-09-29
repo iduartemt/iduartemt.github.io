@@ -1,3 +1,66 @@
 body {
     background-color: #495a5e;
 }
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: arial;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  background: rgb(44, 43, 43);
+}
+
+header h1 {
+    color: white;
+}
+
+
+nav {
+  display: flex;
+  gap: 10px;
+}
+
+nav a {
+  padding: 10px 20px;
+  background-color: rgb(134, 130, 130);
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+  box-shadow: 2px 3px 3px rgb(94, 91, 91);
+}
+
+nav a:last-child {
+  background: rgb(36, 37, 39);
+  color: rgb(184, 183, 183);
+}
+
+a:hover {
+  filter: brightness(90%);
+}
+
+h1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+@media (max-width: 600px) {
+  header, nav {
+    flex-direction: column;
+  }
+  nav {
+    display: none;
+  }
+  header:hover nav {
+    display: flex;
+  }
+  .hamburguer {
+    display: block;
+  }
+}
