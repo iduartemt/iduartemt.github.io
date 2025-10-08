@@ -1,7 +1,6 @@
 * {
     margin: 0px;
     padding: 0px;
-    background-color: white;
 }
 
 #todosOsPontos {
@@ -25,5 +24,9 @@ button {
 }
 
 #caixaDeTexto {
+    background-color: rgb(218, 212, 212);
+}
+
+#caixaDeTexto-ponto4 {
     background-color: rgb(218, 212, 212);
 }
