@@ -9,35 +9,45 @@ const blueColor = document.querySelector("#blue");
 const textoP2 = document.querySelector('#corTexto');
 const botaoConta = document.querySelector('#botaoConta');
 const contador = document.querySelector('#contador');
+const listaCores4 = document.querySelector("#listaCores");
+const botaoSubmit = document.querySelector("#botaoSubmit");
+const nome = document.querySelector("#nome");
+const idade = document.querySelector("#idade");
+const textoApresentacao = document.querySelector("#textoApresentacao");
+const counter = document.querySelector("#contagemAutomatica");
 
 // Variáveis
 let numero = 0;
+let numeroAuto = 0;
 
 // Listeners
+document.querySelector('#listaCores').onchange = function() {
+  document.querySelector('body').style.backgroundColor = this.value;
+};
+
+const passaEmCima = () => {
+  passarPorCima.textContent = "1. Obrigado por passares!";
+}
 passarPorCima.addEventListener("mouseover", passaEmCima);
 passarPorCima.addEventListener("mouseout", tiraRato);
-redColor.addEventListener("click", mudarCorTexto);
-greenColor.addEventListener("click", mudarCorTexto);
-blueColor.addEventListener("click", mudarCorTexto);
 inputP3.addEventListener("keydown", corDeFundo);
 botaoSubmeter.addEventListener("click", submeterTexto);
 botaoConta.addEventListener("click", contar);
 
-// Funções
-function mudarCorTexto() {
-  if (this === redColor) {
-    textoP2.style.color = "red";
-  } else if (this === greenColor) {
-    textoP2.style.color = "green";
-  } else if (this === blueColor) {
-    textoP2.style.color = "blue";
-  }
-}
+//ArrowFunction
+botaoSubmit.addEventListener("click", () => {
+  const nomeDaPessoa = nome.value;
+  const idadeDaPessoa = idade.value;
+  textoApresentacao.textContent = `Olá, o ${nomeDaPessoa} tem ${idadeDaPessoa} !`;
+});
 
 // Funções
-function passaEmCima() {
-  passarPorCima.textContent = "1. Obrigado por passares!";
-}
+document.querySelectorAll("button, #color").forEach((botao) => {
+  botao.addEventListener("click", () => {
+    const cor = botao.dataset.color;
+    textoP2.style.color = cor;
+  });
+});
 
 function tiraRato() {
   passarPorCima.textContent = "1. Passa por aqui!";
@@ -58,7 +68,14 @@ function submeterTexto() {
   document.body.style.backgroundColor = cor;
 }
 
-function contar(){
-   numero++;
-   contador.textContent = numero;
+function contar() {
+  numero++;
+  contador.textContent = numero;
 }
+
+function contarAutomatico() {
+  counter.innerHTML = ++numeroAuto;
+}
+
+setInterval(contarAutomatico, 1000);
+

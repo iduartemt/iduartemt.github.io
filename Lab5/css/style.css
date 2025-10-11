@@ -3,21 +3,26 @@
     padding: 0px;
 }
 
+body {
+    background-color: gray;
+}
+
 #todosOsPontos {
-display: flex;
-flex-direction: column;
-gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 #linha-cor {
     display: flex;
 }
-#botoes{
+
+#botoes {
     margin-left: 5px;
 }
 
 button {
-    padding-left: 5px ;
+    padding-left: 5px;
     padding-right: 5px;
     background-color: rgb(218, 212, 212);
     border-radius: 5px;
@@ -29,4 +34,31 @@ button {
 
 #caixaDeTexto-ponto4 {
     background-color: rgb(218, 212, 212);
+}
+
+#escolheCor {
+    display: flex;
+    gap: 5px;
+}
+
+#listaCores {
+    border-radius: 5px;
+    background-color: rgb(218, 212, 212);
+}
+
+#nomeIdade {
+    display: flex;
+    gap: 5px;
+}
+
+#botaoSubmit {
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: rgb(218, 212, 212);
+    border-radius: 5px;
+}
+
+#autoCounter {
+    display: flex;
+    gap: 10px;
 }

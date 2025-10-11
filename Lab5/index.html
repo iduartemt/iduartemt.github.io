@@ -1,54 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Lab5/css/style.css">
-    <title>Example</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/Lab5/css/style.css">
+  <title>Example</title>
 </head>
+
 <body>
-    <header>
+  <header>
 
-    </header>
+  </header>
 
-    <section id="todosOsPontos">
-        
-        <div id="linha-passagem">
-  <span id="passarPorCima">1. Passa por aqui!</span>
-</div>
+  <section id="todosOsPontos">
 
-<div id="linha-cor">
-  <span id="corTexto">2. Pinta-me!</span>
-  <div id="botoes">
-    <button id="red">Red</button>
-    <button id="green">Green</button>
-    <button id="blue">Blue</button>
-  </div>
-</div>
+    <div id="linha-passagem">
+      <span id="passarPorCima">1. Passa por aqui!</span>
+    </div>
 
-<div id="linha-input">
-  <label for="caixaDeTexto">3. Experimenta escrever...</label>
-  <input id="caixaDeTexto" type="text" />
-</div>
+    <div id="linha-cor">
+      <span id="corTexto">2. Pinta-me!</span>
+      <div id="botoes">
+        <button id="color" data-color="red">Red</button>
+        <button id="color" data-color="green">Green</button>
+        <button id="color" data-color="blue">Blue</button>
+      </div>
+    </div>
 
-<div>
-  4. Escolha uma cor em inglês:
-  <input id="caixaDeTexto-ponto4" type="text">
-  <button id="botaoSub">submeter</button>
-</div>
+    <div id="linha-input">
+      <label for="caixaDeTexto">3. Experimenta escrever...</label>
+      <input id="caixaDeTexto" type="text" />
+    </div>
 
-<div id="conta">
-  5. <button id="botaoConta">Conta!</button>
-  <span id="contador">0</span>
-</div>
+    <div>
+      4. Escolha uma cor em inglês:
+      <input id="caixaDeTexto-ponto4" type="text">
+      <button id="botaoSub">submeter</button>
+    </div>
 
-<div id="escolheCor">
-<p>4. Escolha uma cor:</p>
+    <div id="conta">
+      5. <button id="botaoConta">Conta!</button>
+      <span id="contador">0</span>
+    </div>
 
-</div>
-    </section>
-    <script src="/Lab5/scripts/main.js"></script>
-    <footer>
-    </footer>
+    <div id="escolheCor">
+      <p>6. Escolha uma cor:</p>
+      <select id="listaCores">
+        <option value="white">White</option>
+        <option value="blue">Blue</option>
+        <option value="brown">Brown</option>
+      </select>
+    </div>
+    <div id="nomeIdade">
+      <p>7. </p>
+      <input id="nome" type="text" placeholder="Insira o seu nome">
+      <input id="idade" type="text" placeholder="Insira a sua idade">
+      <button id="botaoSubmit">Submit</button>
+      <p id="textoApresentacao"></p>
+    </div>
+    <div id="autoCounter">
+      <p>8. Automatic Counter: </p>
+      <p id="contagemAutomatica">0</p>
+    </div>
+  </section>
+  <script src="/Lab5/scripts/main.js"></script>
+  <footer>
+  </footer>
 </body>
+
 </html>
