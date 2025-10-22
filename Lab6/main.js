@@ -12,28 +12,41 @@ document.addEventListener("DOMContentLoaded", function () {
 const produtosLi = document.querySelector("#produtos")
 
 function criarProduto(produto) {
+  // <article> do produto
+  const artigo = document.createElement("article");
 
-    // Cria o elemento principal <article>
-    const artigo = document.createElement("article");
+  // título
+  const titulo = document.createElement("h3");
+  titulo.textContent = produto.title;
+  artigo.appendChild(titulo);
 
-    // Mostra o título do produto
-    artigo.textContent = produto.title;
+  // imagem
+  const img = document.createElement("img");
+  // às vezes a API pode vir sem o protocolo; garante "https:"
+  const url = produto.image.startsWith("http")
+    ? produto.image
+    : `https:${produto.image}`;
+  img.src = url;
+  img.alt = produto.title;
+  img.loading = "lazy";     // perf
+  img.width = 200;          // opcional: tamanho
+  artigo.appendChild(img);
 
-    //cria o botao
-    const botao = document.createElement("button");
-    botao.textContent = "Adicionar ao cesto";
+  // botão
+  const botao = document.createElement("button");
+  botao.textContent = "Adicionar ao cesto";
+  botao.addEventListener("click", function () {
+    const lista = JSON.parse(localStorage.getItem("produtos-selecionados")) || [];
+    lista.push(produto);
+    localStorage.setItem("produtos-selecionados", JSON.stringify(lista));
+    atualizaCesto();
+  });
+  artigo.appendChild(botao);
 
-    // Cria o eventListener para o clique do botão
-    botao.addEventListener("click", function () {
-        let lista = JSON.parse(localStorage.getItem("produtos-selecionados")) || [];
-        lista.push(produto);
-        localStorage.setItem("produtos-selecionados", JSON.stringify(lista));
-        atualizaCesto(); // ✅ atualiza o cesto e o total automaticamente
-    });
-
-    artigo.appendChild(botao);
-    produtosLi.append(artigo);
+  // adiciona UMA vez
+  produtosLi.appendChild(artigo);
 }
+
 
 function carregarProdutos(produtos) {
     produtos.forEach(produto => criarProduto(produto));
