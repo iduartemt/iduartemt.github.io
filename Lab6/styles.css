@@ -34,4 +34,53 @@ ul {
     flex-wrap: wrap;
     gap: 40px;
     background-color: rgb(212, 210, 210);
+    padding: 20px;
+}
+
+/* Cada produto */
+#produtos article {
+    background-color: #f0f0f0;       /* cinzento claro */
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    width: 220px;                    /* mesma largura */
+    height: 340px;                   /* altura fixa para todos */
+    display: flex;
+    flex-direction: column;          /* organiza em coluna */
+    align-items: center;             /* centraliza conteúdo */
+    justify-content: space-between;  /* botão vai para o fundo */
+    text-align: center;
+    padding: 15px;
+}
+
+/* Imagem */
+#produtos article img {
+    max-width: 100%;
+    height: 150px;                   /* altura fixa para uniformizar */
+    object-fit: contain;             /* mantém proporções da imagem */
+    margin: 10px 0;
+}
+
+/* Título */
+#produtos article h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+/* Botão */
+#produtos article button {
+    background-color: purple;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    align-self: stretch; /* botão ocupa toda a largura */
+}
+
+#produtos article button:hover {
+    background-color: darkmagenta;
 }
