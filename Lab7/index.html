@@ -1,36 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja</title>
     <link rel="stylesheet" href="styles.css">
-    <title>Loja Amazons</title>
 </head>
 
 <body>
     <header>
-        <h1>Amazon Portugal</h1>
+        <h1>Loja Amazon</h1>
         <nav>
-            <ul>
-                <li><a href="#produtos">Produtos</a></li>
-                <li><a href="#cesto">Cesto</a></li>
-            </ul>
+            <a href="#produtos">Produtos</a>
+            <a href="#cesto">Cesto</a>
         </nav>
     </header>
-    <main>
-        <section id="botaofiltrar">
-            <select id="filtrarProdutos">
-                <option value="">Todas as categorias</option>
-                <option value="">Ordenar</option>
-<input type="text"></select>
-        </section>
-        <section id="produtos">
 
+
+    <main>
+        <section id="filtros">
+            <label>
+                Categoria:
+                <select id="filtro-categoria">
+                    <option value="">Todas</option>
+                </select>
+            </label>
+
+
+            <label>
+                Pesquisa:
+                <input id="filtro-texto" type="search" placeholder="nome do produto...">
+            </label>
+
+
+            <button id="btn-limpar" type="button">Limpar filtros</button>
         </section>
-        </section>
+
+
+        <section id="produtos" aria-live="polite"></section>
+
 
         <section id="cesto">
+            <h2>Cesto</h2>
+            <div id="lista-cesto"></div>
+            <div class="totais">
+                <span>Total:</span>
+                <span id="total-valor">€0,00</span>
+            </div>
         </section>
     </main>
     <script src="/Lab7/main.js"></script>

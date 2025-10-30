@@ -1,162 +1,134 @@
-// garante a chave do cesto
-if (!localStorage.getItem("produtos-selecionados")) {
-  localStorage.setItem("produtos-selecionados", JSON.stringify([]));
-}
+const API_CATS = "https://deisishop.pythonanywhere.com/categories/";
+const API_PROD = "https://deisishop.pythonanywhere.com/products/";
 
-document.addEventListener("DOMContentLoaded", async function () {
-  await carregarCategorias();   // preenche o <select>
-  await carregarProdutosAPI();  // carrega produtos da API e renderiza
-  atualizaCesto();
-});
 
-const secProdutos = document.querySelector("#produtos");
-const seletor = document.querySelector("#filtrarProdutos");
+let todosProdutos = [];
+let cesto = [];
 
-// manteremos os produtos em memória para poder filtrar
-let produtos = [];
 
-/* ------------ UI de produtos ------------ */
-function criarProduto(produto) {
-  const artigo = document.createElement("article");
+const elProdutos = document.querySelector('#produtos');
+const elCategorias = document.querySelector('#filtro-categoria');
+const elFiltroTexto = document.querySelector('#filtro-texto');
+const elBtnLimpar = document.querySelector('#btn-limpar');
+const elListaCesto = document.querySelector('#lista-cesto');
+const elTotal = document.querySelector('#total-valor');
 
-  const titulo = document.createElement("h3");
-  titulo.textContent = produto.title;
-  artigo.appendChild(titulo);
 
-  const img = document.createElement("img");
-  const url = produto.image?.startsWith("http") ? produto.image : `https:${produto.image}`;
-  img.src = url;
-  img.alt = produto.title;
-  img.loading = "lazy";
-  img.width = 200;
-  artigo.appendChild(img);
+const fmtEUR = n => n.toLocaleString('pt-PT', { style: 'currency', currency: 'EUR' });
 
-  const preco = document.createElement("p");
-  preco.textContent = `€${Number(produto.price).toFixed(2)}`;
-  artigo.appendChild(preco);
 
-  const botao = document.createElement("button");
-  botao.textContent = "Adicionar ao cesto";
-  botao.addEventListener("click", function () {
-    const lista = JSON.parse(localStorage.getItem("produtos-selecionados")) || [];
-    lista.push(produto);
-    localStorage.setItem("produtos-selecionados", JSON.stringify(lista));
-    atualizaCesto();
+document.addEventListener('DOMContentLoaded', init);
+
+
+async function init() {
+  cesto = JSON.parse(localStorage.getItem('cesto')) || [];
+  renderCesto();
+  await carregarCategorias();
+  await carregarProdutos();
+  aplicarFiltros();
+  elCategorias.addEventListener('change', aplicarFiltros);
+  elFiltroTexto.addEventListener('input', aplicarFiltros);
+  elBtnLimpar.addEventListener('click', () => {
+    elCategorias.value = '';
+    elFiltroTexto.value = '';
+    aplicarFiltros();
   });
-  artigo.appendChild(botao);
-
-  secProdutos.appendChild(artigo);
 }
 
-function renderizarProdutos(lista) {
-  // limpa apenas os <article> de produtos, mantendo o <select>
-  [...secProdutos.querySelectorAll("article")].forEach(el => el.remove());
-  lista.forEach(criarProduto);
-}
 
-/* ------------ CATEGORIAS ------------ */
 async function carregarCategorias() {
   try {
-    const resp = await fetch("https://deisishop.pythonanywhere.com/categories/");
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const resp = await fetch(API_CATS);
     const categorias = await resp.json();
-
-    // limpa e começa com "todas"
-    seletor.innerHTML = `<option value="">Todas as categorias</option>`;
-
-    categorias.forEach((cat, idx) => {
-      const option = document.createElement("option");
-
-      // se vier string: label=string, value=string
-      // se vier objeto: label=category/name, value=id (se existir) senão label
-      const label =
-        (typeof cat === "string" ? cat :
-         (cat.category ?? cat.name ?? `Categoria ${cat.id ?? idx}`));
-
-      const value =
-        (typeof cat === "string" ? cat :
-         (cat.id != null ? String(cat.id) : label));
-
-      option.value = value;
-      option.textContent = label;
-      seletor.appendChild(option);
+    const nomes = categorias.map((cat, i) => typeof cat === 'string' ? cat : cat.category || cat.name || `Categoria ${i}`);
+    nomes.forEach(nome => {
+      const opt = document.createElement('option');
+      opt.value = nome;
+      opt.textContent = nome;
+      elCategorias.appendChild(opt);
     });
-
-    seletor.addEventListener("change", () => {
-      const val = seletor.value;
-      if (!val) return renderizarProdutos(produtos);
-
-      const filtrados = produtos.filter(p => {
-        const pc = p.category; // pode ser string, número ou objeto
-        const idDoProduto =
-          typeof pc === "object" ? pc.id :
-          typeof pc === "number" ? pc : null;
-
-        const nomeDoProduto =
-          typeof pc === "object" ? (pc.category ?? pc.name) :
-          typeof pc === "string" ? pc : null;
-
-        // compara por id (quando o value é id) OU por nome (quando o value é nome)
-        return (idDoProduto != null && String(idDoProduto) === val) ||
-               (nomeDoProduto != null && nomeDoProduto === val);
-      });
-
-      renderizarProdutos(filtrados);
-    });
-  } catch (e) {
-    console.error("Erro ao carregar categorias:", e);
-  }
+  } catch (e) { console.error(e); }
 }
 
-
-
-/* ------------ PRODUTOS ------------ */
-async function carregarProdutosAPI() {
+async function carregarProdutos() {
   try {
-    const resp = await fetch("https://deisishop.pythonanywhere.com/products/");
-    produtos = await resp.json();
-    renderizarProdutos(produtos);
+    const resp = await fetch(API_PROD);
+    todosProdutos = await resp.json();
   } catch (e) {
-    console.error("Erro ao carregar produtos", e);
+    console.error(e);
+    todosProdutos = [];
   }
 }
 
-/* ------------ CESTO ------------ */
-function atualizaCesto() {
-  const lista = JSON.parse(localStorage.getItem("produtos-selecionados")) || [];
-  const secCesto = document.querySelector("#cesto");
-  secCesto.innerHTML = "";
 
-  lista.forEach(produto => {
-    const artigo = criaProdutoCesto(produto);
-    secCesto.appendChild(artigo);
+function aplicarFiltros() {
+  const cat = elCategorias.value.trim();
+  const texto = elFiltroTexto.value.trim().toLowerCase();
+  const filtrados = todosProdutos.filter(p => {
+    const nome = (p.title || '').toLowerCase();
+    const catNome = typeof p.category === 'object' ? (p.category.category || p.category.name || '') : (p.category || '');
+    return (!cat || catNome === cat) && (!texto || nome.includes(texto));
   });
-
-  const total = lista.reduce((soma, produto) => soma + Number(produto.price || 0), 0);
-  const totalElem = document.createElement("p");
-  totalElem.textContent = `Total: €${total.toFixed(2)}`;
-  secCesto.appendChild(totalElem);
+  renderProdutos(filtrados);
 }
 
-function criaProdutoCesto(produto) {
-  const artigo = document.createElement("article");
 
-  const titulo = document.createElement("h3");
-  titulo.textContent = produto.title;
+function renderProdutos(lista) {
+  elProdutos.innerHTML = lista.length ? '' : '<p>Sem produtos...</p>';
+  lista.forEach(p => elProdutos.appendChild(criarCardProduto(p)));
+}
 
-  const preco = document.createElement("p");
-  preco.textContent = `Preço: €${Number(produto.price).toFixed(2)}`;
 
-  const botaoRemover = document.createElement("button");
-  botaoRemover.textContent = "Remover";
-  botaoRemover.addEventListener("click", function () {
-    let lista = JSON.parse(localStorage.getItem("produtos-selecionados")) || [];
-    const index = lista.findIndex(item => item.id === produto.id);
-    if (index !== -1) lista.splice(index, 1);
-    localStorage.setItem("produtos-selecionados", JSON.stringify(lista));
-    atualizaCesto();
+function criarCardProduto(prod) {
+  const card = document.createElement('article');
+  card.className = 'card';
+  card.innerHTML = `
+<img src="${(prod.image && prod.image.startsWith('http') ? prod.image : 'https:' + prod.image)}" alt="${prod.title}">
+<h3>${prod.title}</h3>
+<div class="preco">${fmtEUR(Number(prod.price || 0))}</div>
+<button class="btn">Adicionar ao cesto</button>
+`;
+  card.querySelector('button').addEventListener('click', () => adicionarAoCesto(prod));
+  return card;
+}
+
+
+function adicionarAoCesto(prod) {
+  const item = { id: prod.id, title: prod.title, price: Number(prod.price || 0) };
+  cesto.push(item);
+  guardarCesto();
+  renderCesto();
+}
+
+
+function removerDoCesto(id) {
+  const idx = cesto.findIndex(i => i.id === id);
+  if (idx !== -1) cesto.splice(idx, 1);
+  guardarCesto();
+  renderCesto();
+}
+
+
+function guardarCesto() {
+  localStorage.setItem('cesto', JSON.stringify(cesto));
+}
+
+
+function renderCesto() {
+  elListaCesto.innerHTML = '';
+  if (!cesto.length) {
+    elListaCesto.innerHTML = '<p>O cesto está vazio.</p>';
+    elTotal.textContent = fmtEUR(0);
+    return;
+  }
+  let total = 0;
+  cesto.forEach(item => {
+    total += item.price;
+    const linha = document.createElement('div');
+    linha.className = 'linha-cesto';
+    linha.innerHTML = `<span>${item.title}</span><strong>${fmtEUR(item.price)}</strong><button>Remover</button>`;
+    linha.querySelector('button').addEventListener('click', () => removerDoCesto(item.id));
+    elListaCesto.appendChild(linha);
   });
-
-  artigo.append(titulo, preco, botaoRemover);
-  return artigo;
+  elTotal.textContent = fmtEUR(total);
 }
