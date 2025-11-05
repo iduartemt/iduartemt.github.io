@@ -110,7 +110,7 @@ function criaProdutoCesto(produto) {
         const index = lista.findIndex(item => item.id === produto.id);
         if (index !== -1) lista.splice(index, 1);
         localStorage.setItem("produtos-selecionados", JSON.stringify(lista));
-        atualizaCesto(); // ✅ atualiza o cesto e recalcula o total
+        atualizaCesto();
     });
 
 

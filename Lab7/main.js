@@ -132,3 +132,64 @@ function renderCesto() {
   });
   elTotal.textContent = fmtEUR(total);
 }
+
+/*
+let produtos = [];
+      let categorias = [];
+      const ul = document.querySelector("ul");
+      const select = document.querySelector("select");
+
+      // B. Fetch de dados (categorias e produtos)
+      fetch("https://deisishop.pythonanywhere.com/products/")
+        .then((response) => response.json())
+        .then((data) => {
+          produtos = data;
+          mostraProdutos(produtos);
+        });
+
+      fetch("https://deisishop.pythonanywhere.com/categories/")
+        .then((response) => response.json())
+        .then((data) => {
+          categorias = data;
+          mostraCategorias(categorias);
+        });
+
+      // C. Funções Auxiliares
+      function mostraProdutos(lista) {
+        ul.innerHTML = "";
+        lista.forEach((produto) => {
+          const li = document.createElement("li");
+          li.textContent =
+            produto.category +
+            ": " +
+            produto.title +
+            "( " +
+            produto.price +
+            " )";
+          ul.append(li);
+        });
+      }
+
+      function mostraCategorias(lista) {
+        lista.forEach((categoria) => {
+          const option = document.createElement("option");
+          option.value = categoria;
+          option.textContent = categoria;
+          select.append(option);
+        });
+      }
+      // D. Event Handlers (funções)
+      function filtra() {
+        if (select.value == "Todos") {
+          mostraProdutos(produtos);
+        } else {
+          const filtrados = produtos.filter(
+            (produto) => produto.category === select.value
+          );
+          mostraProdutos(filtrados);
+        }
+      }
+
+      // E. Event Listener
+      select.onchange = filtra
+      */
