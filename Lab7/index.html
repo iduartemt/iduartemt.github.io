@@ -1,57 +1,77 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loja Lab7</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-
-<body>
+  <body>
     <header>
-        <h1>Loja Amazon</h1>
-        <nav>
-            <a href="#produtos">Produtos</a>
-            <a href="#cesto">Cesto</a>
-        </nav>
+      <h1>Amazon Portugal</h1>
+
+      <nav>
+        <a href="#products">Produtos</a>
+        <a href="#cart">Carrinho</a>
+      </nav>
     </header>
 
-
     <main>
-        <section id="filtros">
-            <label>
-                Categoria:
-                <select id="filtro-categoria">
-                    <option value="">Todas</option>
-                </select>
-            </label>
+      <article id="productsTitle">
+        <h2>Produtos</h2>
+        <article>
+          <label for="searchBox">Pesquisar:</label>
+          <input
+            type="search"
+            id="searchBox"
+            placeholder="Pesquisar produtos..."
+          />
+          <label for="categoryFilter">Filtrar por categoria:</label>
+          <select id="categoryFilter">
+            <option value="">Todas</option>
+          </select>
+          <label for="sortOrder" style="margin-left: 1rem"
+            >Ordenar por preço:</label
+          >
+          <select id="sortOrder">
+            <option value="">Nenhuma</option>
+            <option value="asc">Crescente</option>
+            <option value="desc">Decrescente</option>
+          </select>
+        </article>
+      </article>
 
+      <section id="products"></section>
 
-            <label>
-                Pesquisa:
-                <input id="filtro-texto" type="search" placeholder="nome do produto...">
-            </label>
+      <article id="checkoutZone">
+        <h2>Carrinho</h2>
+        <section id="cart"></section>
 
-
-            <button id="btn-limpar" type="button">Limpar filtros</button>
-        </section>
-
-
-        <section id="produtos" aria-live="polite"></section>
-
-
-        <section id="cesto">
-            <h2>Cesto</h2>
-            <div id="lista-cesto"></div>
-            <div class="totais">
-                <span>Total:</span>
-                <span id="total-valor">€0,00</span>
-            </div>
-        </section>
+        <h3 id="total">Total:</h3>
+        <div id="checkoutControls">
+          <label for="buyerName">Nome:</label>
+          <input id="buyerName" type="text" placeholder="Nome completo" />
+          <label for="studentCheckbox" style="margin-left: 8px"
+            ><input id="studentCheckbox" type="checkbox" /> Estudante</label
+          >
+          <label for="coupon" style="margin-left: 8px">Cupão:</label>
+          <input id="coupon" type="text" placeholder="Código do cupão" />
+          <button
+            id="checkoutBtn"
+            class="bg-black hover:bg-gray-500 text-white font-bold py-3 px-6 rounded shadow-lg transition duration-200"
+          >
+            Finalizar encomenda
+          </button>
+        </div>
+        <div id="orderResult" aria-live="polite" style="margin-top: 8px"></div>
+      </article>
     </main>
-    <script src="/Lab7/main.js"></script>
-    <footer></footer>
-</body>
 
+    <footer>
+      <p>2025 Lab 7</p>
+    </footer>
+    <script src="scripts/main.js"></script>
+  </body>
 </html>
